@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>De lectores escolares a lectores académicos — Grupo 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0c0a0b; --void-2:#141012;
+    --blood:#8c1c1c; --blood-bright:#c0392b;
+    --bone:#ece6dc; --bone-dim:#b7afa3;
+    --ash2:#8a847b; --sick:#9aa88a;
+    --line:rgba(236,230,220,.14);
+    color-scheme: dark;
+    --fx:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 100'%3E%3Cpath d='M20 2 C9 20 6 44 9 66 C10 76 14 86 20 97 C26 86 30 76 31 66 C34 44 31 20 20 2 Z M20 10 L20 92 M20 24 C15 26 11 31 9 38 M20 24 C25 26 29 31 31 38 M20 40 C14 43 10 49 8 57 M20 40 C26 43 30 49 32 57 M20 56 C15 59 12 65 10 73 M20 56 C25 59 28 65 30 73' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Nunito Sans',system-ui,sans-serif;background:var(--void);color:var(--bone);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  .atmos{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(130% 90% at 50% 8%, rgba(140,28,28,.14), transparent 45%),
+      radial-gradient(120% 100% at 50% 120%, rgba(0,0,0,.9), transparent 55%),
+      radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.72) 100%),
+      linear-gradient(180deg,#171214 0%,#0c0a0b 60%,#08070700 100%)}
+  .feathers{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .feather{position:absolute;top:-6vh;width:14px;height:34px;opacity:.45;animation:fall linear infinite;transform-origin:center;
+    background:var(--bone);
+    -webkit-mask:var(--fx) center/contain no-repeat;mask:var(--fx) center/contain no-repeat}
+  .feather.red{background:var(--blood-bright);opacity:.7}
+  @keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:0}10%{opacity:.6}100%{transform:translateY(110vh) rotate(260deg);opacity:0}}
+
+  .deck{position:relative;z-index:2;height:100%;width:100%}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(2.2rem,6vw,6rem);
+    padding-top:calc(clamp(2.2rem,6vw,6rem) + env(safe-area-inset-top,0px));
+    padding-bottom:calc(clamp(3.4rem,6vw,6rem) + env(safe-area-inset-bottom,0px));
+    opacity:0;visibility:hidden;transform:scale(.99);
+    transition:opacity .6s ease,transform .6s ease,visibility .6s;overflow-y:auto}
+  .slide.active{opacity:1;visibility:visible;transform:none}
+
+  .eyebrow{font-family:'Nunito Sans';font-weight:700;font-size:clamp(.7rem,1.1vw,.82rem);
+    letter-spacing:.42em;text-transform:uppercase;color:var(--ash2);margin-bottom:1.5rem}
+  .eyebrow .key{color:var(--blood-bright)}
+
+  h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.8rem,8vw,6.4rem);
+    line-height:.98;letter-spacing:.005em;max-width:15ch;color:var(--bone)}
+  h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.1rem,5vw,4rem);
+    line-height:1.04;max-width:19ch;margin-bottom:1.3rem;color:var(--bone)}
+  .lede{font-size:clamp(1.05rem,1.9vw,1.35rem);line-height:1.55;color:var(--bone-dim);max-width:58ch;margin-top:1.3rem;font-weight:400}
+  p{font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.62;max-width:64ch;color:var(--bone-dim)}
+  em,.it{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1em;color:var(--bone)}
+  .blood{color:var(--blood-bright)}
+
+  .cover{align-items:center;text-align:center}
+  .cover .eyebrow{letter-spacing:.5em}
+  .cover h1{font-size:clamp(3rem,9vw,7rem);max-width:13ch}
+  .cover .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.25rem,2.6vw,2rem);color:var(--bone-dim);margin-top:1.4rem;max-width:34ch;line-height:1.35}
+  .rule{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--blood),transparent);margin:2rem auto}
+  .cover .meta{display:flex;flex-direction:column;gap:1.1rem;align-items:center}
+  .cover .meta .k{font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ash2);margin-bottom:.5rem}
+  .cover .meta .v{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--bone)}
+  .names{font-size:1.05rem;line-height:1.75}
+  .names .sep{color:var(--blood)}
+
+  ul.clean{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:.95rem;max-width:60ch}
+  ul.clean li{position:relative;padding-left:1.9rem;font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.5;color:var(--bone-dim)}
+  ul.clean li::before{content:"";position:absolute;left:.1rem;top:.55em;width:.55rem;height:.55rem;background:var(--blood);transform:rotate(45deg)}
+
+  .stats{display:flex;flex-wrap:wrap;gap:clamp(1.6rem,5vw,4rem);margin-top:2.2rem}
+  .stat{max-width:22ch}
+  .stat .num{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(3rem,8vw,6rem);
+    line-height:.9;color:var(--blood-bright);text-shadow:0 2px 24px rgba(192,57,43,.35)}
+  .stat .lab{margin-top:.7rem;font-size:.98rem;line-height:1.45;color:var(--bone-dim)}
+  .stat .lab em{font-size:1em;color:var(--ash2)}
+
+  .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.2rem}
+  .door{border:1px solid var(--line);border-top:2px solid var(--blood);padding:1.6rem 1.4rem;
+    background:linear-gradient(180deg,rgba(140,28,28,.06),rgba(236,230,220,.015));
+    display:flex;flex-direction:column;gap:.85rem;position:relative;transition:border-color .3s,background .3s}
+  .door:hover{border-color:var(--blood-bright);background:linear-gradient(180deg,rgba(140,28,28,.12),rgba(236,230,220,.02))}
+  .door .dn{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--blood-bright);font-size:1.05rem}
+  .door h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.5rem;line-height:1.05;color:var(--bone)}
+  .door p{font-size:.95rem;line-height:1.45;color:var(--bone-dim);max-width:none}
+  .door .tools{margin-top:auto;display:flex;flex-wrap:wrap;gap:.4rem}
+  .tag{font-size:.76rem;padding:.26rem .62rem;border:1px solid var(--line);color:var(--bone-dim);letter-spacing:.02em;background:rgba(0,0,0,.25)}
+
+  .pull{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;font-size:clamp(1.7rem,4vw,3.2rem);line-height:1.22;max-width:22ch;color:var(--bone)}
+  .pull .hi{color:var(--blood-bright);font-style:normal}
+
+  .frameworks{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem;max-width:60ch}
+  .fw{border:1px solid var(--line);border-left:2px solid var(--blood);padding:.65rem 1.05rem;font-size:.95rem;color:var(--bone-dim);background:rgba(0,0,0,.2)}
+  .fw b{font-family:'Cormorant Garamond',serif;color:var(--bone);font-weight:600;font-size:1.1em}
+
+  .demoslide{align-items:center;text-align:center}
+  .live{margin-top:2rem;display:inline-flex;align-items:center;gap:.9rem;font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.3rem,2.6vw,1.9rem);color:var(--bone);border:1px solid var(--blood);padding:1rem 1.8rem;background:rgba(140,28,28,.12);letter-spacing:.02em}
+  .live .dot{width:.7rem;height:.7rem;border-radius:50%;background:var(--blood-bright);box-shadow:0 0 0 0 rgba(192,57,43,.7);animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(192,57,43,0)}100%{box-shadow:0 0 0 0 rgba(192,57,43,0)}}
+  .keys{display:flex;gap:.6rem;margin-top:1.6rem;justify-content:center}
+  .keys span{font-size:1.4rem;opacity:.85}
+
+  .nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:1rem clamp(1.4rem,4vw,3rem);padding-bottom:calc(1rem + env(safe-area-inset-bottom,0px));pointer-events:none}
+  .nav .side{display:flex;gap:.6rem;pointer-events:auto}
+  .nav button{font-size:1.1rem;color:var(--bone);background:rgba(236,230,220,.06);border:1px solid rgba(236,230,220,.16);
+    width:2.6rem;height:2.6rem;border-radius:50%;cursor:pointer;transition:background .2s,border-color .2s;display:flex;align-items:center;justify-content:center}
+  .nav button:hover{background:rgba(140,28,28,.3);border-color:var(--blood-bright)}
+  .nav button:focus-visible{outline:2px solid var(--blood-bright);outline-offset:2px}
+  .counter{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ash2);pointer-events:auto}
+  .counter b{color:var(--blood-bright)}
+  .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blood),var(--blood-bright));z-index:30;transition:width .5s ease}
+  .hint{position:fixed;top:1.2rem;right:clamp(1.4rem,4vw,3rem);z-index:20;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash2);padding-top:env(safe-area-inset-top,0px)}
+
+  @media (max-width:760px){.doors{grid-template-columns:1fr}.cover h1{font-size:clamp(2.6rem,11vw,3.4rem)}}
+  @media (prefers-reduced-motion:reduce){.slide{transition:opacity .2s}.feather,.dot,.stat .num{animation:none}.feathers{display:none}}
+</style>
+</head>
+<body>
+<div class="atmos"></div>
+<div class="feathers" id="feathers"></div>
+<div class="progress" id="progress"></div>
+<div class="hint">← → avanzar</div>
+
+<div class="deck" id="deck">
+
+  <section class="slide cover active">
+    <div class="eyebrow">Jornada · Nuevas Tecnologías Educativas I</div>
+    <h1>De lectores escolares a lectores académicos</h1>
+    <p class="sub">Una propuesta tecnopedagógica para la comprensión lectora en el ingreso universitario</p>
+    <div class="rule"></div>
+    <div class="meta">
+      <div><div class="k">Grupo 9 · Universidad CAECE</div>
+        <div class="v names">Fiorella Coppola <span class="sep">·</span> Florencia Chornobroff <span class="sep">·</span> Magalí De Olivera <span class="sep">·</span> Paula Peralta <span class="sep">·</span> María Mercedes Recalde</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala I</span> &nbsp;·&nbsp; Contexto y necesidad</div>
+    <h2>El ingreso: donde se abre la brecha de la literacidad académica</h2>
+    <p>Al pasar del secundario al nivel superior, el estudiante enfrenta por primera vez textos extensos, vocabulario especializado y consignas complejas. Esa distancia entre lo que sabe leer y lo que el nivel superior exige es una de las causas de la <span class="blood">deserción temprana</span>.</p>
+    <ul class="clean">
+      <li>Lecturas fragmentarias y literales; cuesta identificar tesis y argumentos</li>
+      <li>Dificultad para interpretar consignas académicas y producir síntesis</li>
+      <li>Baja alfabetización digital académica</li>
+    </ul>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala I</span> &nbsp;·&nbsp; Por qué es relevante</div>
+    <h2>No es una percepción: está documentado</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">38,3%</div>
+        <div class="lab">egresa del secundario con desempeño básico o por debajo en Lengua<br><em>Pruebas Aprender, 2022</em></div></div>
+      <div class="stat"><div class="num">+60%</div>
+        <div class="lab">de los ingresantes no comprende textos académicos<br><em>Carlino, 2005</em></div></div>
+    </div>
+    <p style="margin-top:2.2rem">Para situarlo, la propuesta arranca con dos diagnósticos reales: un <span class="it">Padlet</span> de presentación y un <span class="it">Escape Room</span> de comprensión lectora.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala II</span> &nbsp;·&nbsp; Relación con el eje</div>
+    <div class="pull">La tecnología no es un adorno: es el <span class="hi">andamiaje</span> que hace posible una lectura más profunda, colaborativa y visible.</div>
+    <p class="lede">Respondemos directamente al eje <span class="it">propuestas de enseñanza poderosas con tecnologías digitales</span>: cada herramienta se elige por la función pedagógica que cumple en el recorrido, nunca por sí misma.</p>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala III</span> &nbsp;·&nbsp; La propuesta, sala por sala</div>
+    <h2>4 semanas · 8 actividades · 3 puertas que se abren</h2>
+    <div class="doors">
+      <div class="door"><div class="dn">Primera puerta</div><h3>Diagnóstico</h3>
+        <p>Antes de enseñar, conocer al grupo: qué saben, qué les cuesta y cómo se sienten al leer.</p>
+        <div class="tools"><span class="tag">Padlet</span><span class="tag">Escape Room</span><span class="tag">Mentimeter</span></div></div>
+      <div class="door"><div class="dn">Segunda puerta</div><h3>Lectura y organización</h3>
+        <p>De la lectura solitaria a la lectura social y la organización visual de las ideas.</p>
+        <div class="tools"><span class="tag">Perusall</span><span class="tag">Miro</span><span class="tag">Drawings</span></div></div>
+      <div class="door"><div class="dn">Tercera puerta</div><h3>Producción y evaluación</h3>
+        <p>Glosario, síntesis y una presentación visual final con coevaluación por rúbrica.</p>
+        <div class="tools"><span class="tag">Google Docs</span><span class="tag">Canva</span><span class="tag">Genially</span></div></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala III</span> &nbsp;·&nbsp; Por qué cada decisión</div>
+    <h2>Ninguna herramienta está puesta porque sí</h2>
+    <p>La elección de cada tecnología se sostiene en marcos que articulan contenido, pedagogía y tecnología. El recorrido avanza del diagnóstico a la producción, con una intención pedagógica en cada paso.</p>
+    <div class="frameworks">
+      <div class="fw"><b>TPACK</b> · contenido + pedagogía + tecnología</div>
+      <div class="fw"><b>Aprendizaje Profundo</b> · las 6C (Fullan, Quinn y McEachen)</div>
+      <div class="fw"><b>Enfoque sociocultural</b> · la tecnología como mediadora (Coll)</div>
+      <div class="fw"><b>Gamificación</b> · diagnóstico lúdico (Ripoll y Pujolà)</div>
+    </div>
+  </section>
+
+  <section class="slide demoslide">
+    <div class="eyebrow"><span class="key">★</span> &nbsp;·&nbsp; Lo mostramos en vivo</div>
+    <h2 style="max-width:24ch">Escape Room<br>“El Almohadón de Plumas”</h2>
+    <p style="max-width:52ch;margin:0 auto">Un diagnóstico gamificado de desarrollo propio sobre el cuento de Horacio Quiroga (1907). Para abrir cada una de las cinco puertas, el estudiante identifica ideas principales, infiere y relaciona fragmentos del texto.</p>
+    <div class="keys"><span>🗝️</span><span>🗝️</span><span>🗝️</span><span>🗝️</span><span>🗝️</span></div>
+    <div class="live"><span class="dot"></span> plumas.pages.dev</div>
+  </section>
+
+  <section class="slide">
+    <div class="eyebrow"><span class="key">Sala IV</span> &nbsp;·&nbsp; Nuestra experiencia</div>
+    <div class="pull" style="max-width:26ch">Lo que nos llevamos: <span class="hi">la tecnología sola no enseña. Enseña la decisión pedagógica que hay detrás.</span></div>
+    <p class="lede">Diseñar en grupo nos obligó a justificar cada herramienta, a ponernos en el lugar del ingresante y a pensar la evaluación como parte del aprendizaje, no como su cierre.</p>
+  </section>
+
+  <section class="slide cover">
+    <div class="eyebrow">En síntesis</div>
+    <h1 style="font-size:clamp(2.4rem,6.5vw,4.8rem);max-width:18ch">Reducir la brecha de literacidad desde el primer día</h1>
+    <p class="sub" style="max-width:40ch">Un recorrido donde cada tecnología tiene una intención pedagógica clara: comprensión profunda, alfabetización digital, pensamiento crítico y colaboración.</p>
+    <div class="rule"></div>
+    <div class="meta"><div class="v" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--bone-dim)">Gracias · Grupo 9 · CAECE</div></div>
+  </section>
+
+</div>
+
+<nav class="nav">
+  <div class="counter"><b id="cur">1</b> / <span id="tot">9</span></div>
+  <div class="side">
+    <button id="prev" aria-label="Anterior">‹</button>
+    <button id="next" aria-label="Siguiente">›</button>
+  </div>
+</nav>
+
+<script>
+  (function(){
+    const wrap=document.getElementById('feathers');
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    for(let i=0;i<18;i++){
+      const f=document.createElement('div');
+      f.className='feather'+(Math.random()<0.22?' red':'');
+      f.style.left=(Math.random()*100)+'vw';
+      var w=7+Math.random()*9;f.style.width=w+'px';f.style.height=(w*2.4)+'px';
+      const dur=9+Math.random()*12;
+      f.style.animationDuration=dur+'s';
+      f.style.animationDelay=(-Math.random()*dur)+'s';
+      wrap.appendChild(f);
+    }
+  })();
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length; let i=0;
+  const curEl=document.getElementById('cur'), progress=document.getElementById('progress');
+  document.getElementById('tot').textContent=total;
+  function show(n){i=Math.max(0,Math.min(total-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    curEl.textContent=i+1;progress.style.width=((i+1)/total*100)+'%'}
+  const next=()=>show(i+1), prev=()=>show(i-1);
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next()}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}
+    if(e.key==='Home')show(0); if(e.key==='End')show(total-1)});
+  let x0=null;
+  document.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50){dx<0?next():prev()}x0=null},{passive:true});
+  show(0);
+</script>
+</body>
+</html>
